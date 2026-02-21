@@ -4,14 +4,13 @@ import rpg.enemy.components.Ability;
 import rpg.enemy.components.LootTable;
 import rpg.enemy.ai.AIBehavior;
 
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Enemy implements Cloneable {
 
     protected String name;
-    protected EnemyType type;
+    public EnemyType type;
     protected ElementType element;
 
     protected Stats stats;
@@ -74,4 +73,36 @@ public abstract class Enemy implements Cloneable {
                 ", stats=" + stats +
                 '}';
     }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(EnemyType type) {
+        this.type = type;
+    }
+
+    public void setElement(ElementType element) {
+        this.element = element;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
+    public void setAbilities(List<Ability> abilities) {
+        this.abilities = abilities;
+    }
+
+    public void setLootTable(LootTable lootTable) {
+        this.lootTable = lootTable;
+    }
+
+    public void setAiBehavior(AIBehavior aiBehavior) {
+        this.aiBehavior = aiBehavior;
+    }
+
+
+
 }

@@ -15,15 +15,16 @@ public class GoblinBuilder extends EnemyBuilder {
 
         Goblin goblin = new Goblin();
 
-        goblin.name = name;
-        goblin.type = EnemyType.NORMAL;
-        goblin.element = element;
-        goblin.stats = stats;
+        goblin.setName(name);
+        goblin.setType(EnemyType.NORMAL);
+        goblin.setElement(element);
+        goblin.setStats(stats);
 
-        goblin.abilities = factory.createAbilities();
-        goblin.lootTable = factory.createLootTable();
-        goblin.aiBehavior = factory.createAI();
+        goblin.setAbilities(factory.createAbilities());
+        goblin.setLootTable(factory.createLootTable());
+        goblin.setAiBehavior(factory.createAI());
 
         return goblin;
     }
+
 }

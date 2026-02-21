@@ -23,14 +23,14 @@ public class DragonBossBuilder extends EnemyBuilder {
 
         DragonBoss dragon = new DragonBoss();
 
-        dragon.name = name;
-        dragon.type = EnemyType.BOSS;
-        dragon.element = element;
-        dragon.stats = stats;
+        dragon.setName(name);
+        dragon.setType(EnemyType.BOSS);
+        dragon.setElement(element);
+        dragon.setStats(stats);
 
-        dragon.abilities = factory.createAbilities();
-        dragon.lootTable = factory.createLootTable();
-        dragon.aiBehavior = new PhaseBasedAI(phaseThreshold);
+        dragon.setAbilities(factory.createAbilities());
+        dragon.setLootTable(factory.createLootTable());
+        dragon.setAiBehavior(new PhaseBasedAI(phaseThreshold));
 
         return dragon;
     }

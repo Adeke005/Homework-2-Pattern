@@ -1,58 +1,59 @@
 package rpg;
 
+import rpg.enemy.core.Stats;
+import rpg.hero.character.Character;
+import rpg.hero.character.WarriorFactory;
+import rpg.hero.character.CharacterFactory;
+import rpg.hero.equipment.MedievalEquipmentFactory;
+
+import rpg.enemy.builder.DragonBossBuilder;
+import rpg.enemy.factory.FireEnemyFactory;
 import rpg.enemy.core.Enemy;
-import rpg.enemy.director.EnemyDirector;
-import rpg.enemy.prototype.EnemyRegistry;
+
+import rpg.adapter.Combatant;
+import rpg.adapter.HeroCombatantAdapter;
+import rpg.adapter.EnemyCombatantAdapter;
+
+import rpg.battle.BattleEngine;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("=== RPG Enemy System Demo ===\n");
-
-        EnemyDirector director = new EnemyDirector();
+        System.out.println("=== RPG SYSTEM DEMO ===\n");
 
 
-        System.out.println("Creating Fire Dragon Boss...");
-        Enemy fireDragon = director.createStandardFireDragon();
-        System.out.println(fireDragon);
-        fireDragon.performAI();
+        CharacterFactory warriorFactory = new WarriorFactory();
+        Character hero = warriorFactory.createCharacter();
 
-        System.out.println("\n----------------------------------\n");
+        hero.equip(new MedievalEquipmentFactory());
 
-
-        System.out.println("Creating Ice Goblin...");
-        Enemy iceGoblin = director.createIceGoblin();
-        System.out.println(iceGoblin);
-        iceGoblin.performAI();
-
-        System.out.println("\n----------------------------------\n");
+        System.out.println("Hero created:");
+        hero.showStats();
+        System.out.println();
 
 
-        System.out.println("Registering Fire Dragon template...");
-        EnemyRegistry registry = new EnemyRegistry();
-        registry.register("fire_dragon", fireDragon);
 
-        System.out.println("Cloning Fire Dragon from registry...");
-        Enemy clonedDragon = registry.create("fire_dragon");
-        System.out.println("Cloned: " + clonedDragon);
+        DragonBossBuilder builder =
+                new DragonBossBuilder(new FireEnemyFactory());
 
-        System.out.println("\n----------------------------------\n");
+        Enemy dragon = builder
+                .setName("Fire Dragon")
+                .setStats(new Stats(300, 40, 10, 5))
+                .build();
 
-
-        System.out.println("Creating Elite version of Fire Dragon...");
-        Enemy eliteDragon = director.createEliteFromTemplate(clonedDragon);
-        System.out.println("Elite: " + eliteDragon);
-
-        System.out.println("\n----------------------------------\n");
+        System.out.println("Enemy created:");
+        System.out.println(dragon);
+        System.out.println();
 
 
-        System.out.println("Damaging Elite Dragon...");
-        eliteDragon.takeDamage(10000);
 
-        System.out.println("Original Dragon HP: " + fireDragon.getStats().getHealth());
-        System.out.println("Elite Dragon HP: " + eliteDragon.getStats().getHealth());
+        Combatant heroAdapter = new HeroCombatantAdapter(hero);
+        Combatant enemyAdapter = new EnemyCombatantAdapter(dragon);
 
-        System.out.println("\n=== Demo Finished ===");
+
+
+        BattleEngine engine = BattleEngine.getInstance();
+        engine.startBattle(heroAdapter, enemyAdapter);
     }
 }

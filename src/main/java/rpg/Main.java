@@ -16,6 +16,10 @@ import rpg.adapter.EnemyCombatantAdapter;
 
 import rpg.battle.BattleEngine;
 
+import rpg.effect.*;
+import rpg.skill.*;
+import rpg.raid.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -25,13 +29,10 @@ public class Main {
 
         CharacterFactory warriorFactory = new WarriorFactory();
         Character hero = warriorFactory.createCharacter();
-
         hero.equip(new MedievalEquipmentFactory());
 
-        System.out.println("Hero created:");
         hero.showStats();
         System.out.println();
-
 
 
         DragonBossBuilder builder =
@@ -42,18 +43,43 @@ public class Main {
                 .setStats(new Stats(300, 40, 10, 5))
                 .build();
 
-        System.out.println("Enemy created:");
         System.out.println(dragon);
         System.out.println();
-
 
 
         Combatant heroAdapter = new HeroCombatantAdapter(hero);
         Combatant enemyAdapter = new EnemyCombatantAdapter(dragon);
 
 
-
+        System.out.println("=== BATTLE ENGINE (HW3) ===");
         BattleEngine engine = BattleEngine.getInstance();
         engine.startBattle(heroAdapter, enemyAdapter);
+
+
+        System.out.println("\n=== SKILL DEMO (Bridge Pattern) ===");
+
+        Skill fireSlash = new SlashSkill(new FireEffect());
+        Skill iceMagic = new MagicSkill(new IceEffect());
+        Skill poisonSlash = new SlashSkill(new PoisonEffect());
+
+        int baseDamage = hero.attack();
+
+        System.out.println("Fire Slash damage: " + fireSlash.use(baseDamage));
+        System.out.println("Ice Magic damage: " + iceMagic.use(baseDamage));
+        System.out.println("Poison Slash damage: " + poisonSlash.use(baseDamage));
+
+
+        System.out.println("\n=== RAID DEMO (Composite Pattern) ===");
+
+        UnitLeaf heroUnit = new UnitLeaf(heroAdapter);
+        UnitLeaf dragonUnit = new UnitLeaf(enemyAdapter);
+
+        RaidGroup heroParty = new RaidGroup("Hero Party");
+        heroParty.add(heroUnit);
+        RaidGroup dragonRaid = new RaidGroup("Dragon Raid");
+        dragonRaid.add(dragonUnit);
+
+        RaidEngine raidEngine = new RaidEngine();
+        raidEngine.startRaid(heroParty, dragonRaid);
     }
 }

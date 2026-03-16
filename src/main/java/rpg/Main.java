@@ -19,6 +19,8 @@ import rpg.battle.BattleEngine;
 import rpg.effect.*;
 import rpg.skill.*;
 import rpg.raid.*;
+import rpg.decorator.*;
+import rpg.facade.*;
 
 public class Main {
 
@@ -81,5 +83,20 @@ public class Main {
 
         RaidEngine raidEngine = new RaidEngine();
         raidEngine.startRaid(heroParty, dragonRaid);
+        System.out.println("=== DECORATOR DEMO ===");
+
+        Attack attack = new BasicAttack(10);
+
+        attack = new FireAttackDecorator(attack);
+        attack = new CriticalAttackDecorator(attack);
+        attack = new PoisonAttackDecorator(attack);
+
+        System.out.println("Total damage: " + attack.dealDamage());
+
+        System.out.println("\n=== FACADE DEMO ===");
+
+        DungeonFacade dungeon = new DungeonFacade();
+
+        dungeon.runDungeon();
     }
 }

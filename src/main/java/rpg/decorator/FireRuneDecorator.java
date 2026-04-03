@@ -1,8 +1,8 @@
 package rpg.decorator;
 
-public class FireAttackDecorator extends AttackDecorator {
+public class FireRuneDecorator extends ActionDecorator {
 
-    public FireAttackDecorator(Attack attack) {
+    public FireRuneDecorator(Attack attack) {
         super(attack);
     }
 

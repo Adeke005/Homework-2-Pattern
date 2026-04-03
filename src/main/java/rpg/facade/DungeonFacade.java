@@ -17,4 +17,9 @@ public class DungeonFacade {
         System.out.println("=== Dungeon Completed ===");
 
     }
+    public void printSummary() {
+        System.out.println("=== Summary ===");
+        System.out.println("Dungeon completed successfully.");
+        System.out.println("Rewards granted. Systems executed: Preparation → Battle → Reward");
+    }
 }

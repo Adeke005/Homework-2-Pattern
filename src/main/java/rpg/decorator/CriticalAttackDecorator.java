@@ -1,6 +1,6 @@
 package rpg.decorator;
 
-public class CriticalAttackDecorator extends AttackDecorator {
+public class CriticalAttackDecorator extends ActionDecorator {
 
     public CriticalAttackDecorator(Attack attack) {
         super(attack);

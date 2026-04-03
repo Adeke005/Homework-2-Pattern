@@ -11,6 +11,6 @@ public class MagicSkill extends Skill {
     @Override
     public int use(int baseDamage) {
         System.out.println("Using Magic Skill");
-        return effect.applyEffect(baseDamage + 5);
+        return effect.apply(baseDamage + 5);
     }
 }

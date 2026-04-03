@@ -1,5 +1,5 @@
 package rpg.effect;
 
 public interface EffectImplementor {
-    int applyEffect(int baseDamage);
+    int apply(int baseDamage);
 }

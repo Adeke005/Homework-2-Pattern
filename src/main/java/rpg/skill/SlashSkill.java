@@ -11,6 +11,6 @@ public class SlashSkill extends Skill {
     @Override
     public int use(int baseDamage) {
         System.out.println("Using Slash Skill");
-        return effect.applyEffect(baseDamage);
+        return effect.apply(baseDamage);
     }
 }

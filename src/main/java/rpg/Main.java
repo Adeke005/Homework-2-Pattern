@@ -73,30 +73,35 @@ public class Main {
 
         System.out.println("\n=== RAID DEMO (Composite Pattern) ===");
 
-        UnitLeaf heroUnit = new UnitLeaf(heroAdapter);
-        UnitLeaf dragonUnit = new UnitLeaf(enemyAdapter);
+        HeroUnit heroUnit = new HeroUnit(heroAdapter);
+        EnemyUnit dragonUnit = new EnemyUnit(enemyAdapter);
 
         RaidGroup heroParty = new RaidGroup("Hero Party");
         heroParty.add(heroUnit);
+
         RaidGroup dragonRaid = new RaidGroup("Dragon Raid");
         dragonRaid.add(dragonUnit);
 
         RaidEngine raidEngine = new RaidEngine();
         raidEngine.startRaid(heroParty, dragonRaid);
-        System.out.println("=== DECORATOR DEMO ===");
+
+
+        System.out.println("\n=== DECORATOR DEMO ===");
 
         Attack attack = new BasicAttack(10);
 
-        attack = new FireAttackDecorator(attack);
+        attack = new FireRuneDecorator(attack); // ✔ исправлено
         attack = new CriticalAttackDecorator(attack);
         attack = new PoisonAttackDecorator(attack);
 
         System.out.println("Total damage: " + attack.dealDamage());
+
 
         System.out.println("\n=== FACADE DEMO ===");
 
         DungeonFacade dungeon = new DungeonFacade();
 
         dungeon.runDungeon();
+        dungeon.printSummary();
     }
 }

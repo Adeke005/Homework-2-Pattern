@@ -7,6 +7,7 @@ public class AttackCommand implements ActionCommand {
 
     private ArenaFighter fighter;
     private ArenaOpponent opponent;
+    private int lastDamage;
 
     public AttackCommand(ArenaFighter f, ArenaOpponent o) {
         this.fighter = f;
@@ -14,10 +15,12 @@ public class AttackCommand implements ActionCommand {
     }
 
     public void execute() {
-        fighter.attack(opponent);
+        lastDamage = fighter.getAttack();
+        opponent.receiveDamage(lastDamage);
     }
 
     public void undo() {
-        System.out.println("Undo attack (not fully reversible)");
+        opponent.receiveDamage(-lastDamage);
+        System.out.println("Undo attack");
     }
 }

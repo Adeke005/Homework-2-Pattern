@@ -1,10 +1,12 @@
 package rpg.adapter;
+import rpg.strategy.*;
 
 import rpg.hero.character.Character;
 
 public class HeroCombatantAdapter implements Combatant {
 
     private final Character hero;
+    private CombatStrategy strategy = new BalancedStrategy();
 
     public HeroCombatantAdapter(Character hero) {
         this.hero = hero;
@@ -30,12 +32,12 @@ public class HeroCombatantAdapter implements Combatant {
 
     @Override
     public int dealDamage() {
-        int damage = hero.attack();
+        int base = hero.attack();
+        int result = strategy.calculateDamage(base);
 
         System.out.println(hero.getName() +
-                " attacks for " + damage + " damage.");
-
-        return damage;
+                " attacks for " + result + " (" + strategy.getName() + ")");
+        return result;
     }
 
     @Override

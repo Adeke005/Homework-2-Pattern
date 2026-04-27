@@ -32,6 +32,12 @@ public class HeroCombatantAdapter implements Combatant {
 
     @Override
     public int dealDamage() {
+        hero.startTurn();
+
+        if (!hero.isAlive()) {
+            return 0;
+        }
+
         int base = hero.attack();
         int result = strategy.calculateDamage(base);
 

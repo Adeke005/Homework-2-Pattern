@@ -1,5 +1,6 @@
 package rpg;
 
+import java.util.List;
 import rpg.enemy.core.Stats;
 import rpg.hero.character.Character;
 import rpg.hero.character.WarriorFactory;
@@ -23,6 +24,14 @@ import rpg.decorator.*;
 import rpg.facade.*;
 
 import rpg.observer.*;
+import rpg.floor.BattleFloor;
+import rpg.floor.FloorResult;
+import rpg.floor.TowerFloor;
+import rpg.floor.TrapFloor;
+import rpg.floor.TreasureFloor;
+import rpg.state.NormalState;
+import rpg.tower.TowerRunResult;
+import rpg.tower.TowerRunner;
 public class Main {
 
     public static void main(String[] args) {
@@ -116,5 +125,38 @@ public class Main {
 
         dungeon.runDungeon();
         dungeon.printSummary();
+
+        // ================= STATE + TEMPLATE METHOD =================
+        System.out.println("\n=== TOWER DEMO (State + Template Method) ===");
+
+        CharacterFactory towerHeroFactory = new WarriorFactory();
+        Character towerHero = towerHeroFactory.createCharacter();
+        towerHero.equip(new MedievalEquipmentFactory());
+        towerHero.setState(new NormalState());
+
+        List<TowerFloor> floors = List.of(
+                new TreasureFloor("Ancient Cache", "Lesser Potion", 20),
+                new TrapFloor("Venom Corridor", 18, true, 2, 7),
+                new BattleFloor("Guardian Hall", "Stone Golem", 90, 25),
+                new TreasureFloor("Recovery Shrine", "Greater Potion", 35),
+                new BattleFloor("Apex Chamber", "Abyss Knight", 120, 30)
+        );
+
+        TowerRunner towerRunner = new TowerRunner();
+        TowerRunResult runResult = towerRunner.run(towerHero, floors);
+
+        System.out.println("\nFloor results:");
+        for (FloorResult floorResult : runResult.getFloorResults()) {
+            System.out.println(" - " + floorResult);
+        }
+
+        System.out.println("Hero HP: " + runResult.getHeroRemainingHp() + "/" + towerHero.getMaxHealth());
+        System.out.println("Hero alive: " + runResult.isHeroSurvived());
+        System.out.println("Final hero state: " + towerHero.getCurrentStateName());
+
+        System.out.println("State transitions:");
+        for (String transition : towerHero.getStateTransitionLog()) {
+            System.out.println(" - " + transition);
+        }
     }
 }

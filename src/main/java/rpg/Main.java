@@ -32,6 +32,7 @@ import rpg.floor.TreasureFloor;
 import rpg.state.NormalState;
 import rpg.tower.TowerRunResult;
 import rpg.tower.TowerRunner;
+import rpg.council.CouncilEngine;
 public class Main {
 
     public static void main(String[] args) {
@@ -158,5 +159,9 @@ public class Main {
         for (String transition : towerHero.getStateTransitionLog()) {
             System.out.println(" - " + transition);
         }
+
+        // ================= ITERATOR + MEDIATOR =================
+        CouncilEngine councilEngine = new CouncilEngine();
+        councilEngine.run();
     }
 }
